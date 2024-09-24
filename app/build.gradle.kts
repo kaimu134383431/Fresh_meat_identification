@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
-android {
+android {//a
     namespace = "com.example.freshmeatidentification"
     compileSdk = 34
 
