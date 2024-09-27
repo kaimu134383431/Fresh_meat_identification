@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--activity_2-->
     <string name="loading_button_text">読み込む</string>
     <string name="reshooting_button_text">もう一度撮影する</string>
+    <!--activity_3-->
     <string name="loading_load_text">ロード中だよ&#8230;</string>
+    <!--activity_4-->
+    <string name="one_more_time_loading">もう一度読み込む？</string>
+    <string name="one_more_time_yes">YES</string>
+    <string name="one_more_time_no">NO</string>
 
 </resources>

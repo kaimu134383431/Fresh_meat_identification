@@ -6,9 +6,6 @@
     android:fitsSystemWindows="true">
 
 
-
-
-
     <!--ここから下はスクロールのためのサンプル後で変更すること！ただし、idは変えないこと！-->
         <ScrollView
             android:id="@+id/s_result"
