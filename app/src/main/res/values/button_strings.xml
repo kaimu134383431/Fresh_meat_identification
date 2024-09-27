@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading_button_text">読み込む</string>
+    <string name="reshooting_button_text">もう一度撮影する</string>
+</resources>
