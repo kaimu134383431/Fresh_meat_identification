@@ -2,6 +2,6 @@
 <resources>
     <string name="loading_button_text">読み込む</string>
     <string name="reshooting_button_text">もう一度撮影する</string>
-    <string name="loading_load_text">ロード中だよ...</string>
+    <string name="loading_load_text">ロード中だよ&#8230;</string>
 
 </resources>
