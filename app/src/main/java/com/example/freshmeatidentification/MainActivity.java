@@ -26,20 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
-//    private Button b_yomikomi;
-//    private Button b_mouitido;
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        b_yomikomi = findViewById(R.id.b_yomikomi);
-//        b_mouitido = findViewById(R.id.b_mouitido);
-//    }
+
 //    public void b_camera(View v){
-//        b_camera.setVisibility(View.GONE);
-//        b_yomikomi.setVisibility(View.VISIBLE);
-//        b_mouitido.setVisibility(View.VISIBLE);
+
 //    }
 
     @Override

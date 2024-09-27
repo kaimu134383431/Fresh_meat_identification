@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <resources>
+        <string name="label_mouitido">もう一度撮る</string>
+        <string name="label_yomikomi">読み込む</string>
+    </resources>
+    <Button
+        android:id="@+id/b_yomikomi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/label_mouitido"
+        android:visibility="invisible"
+        app:rippleColor="#673AB7" />
+
+    <Button
+        android:id="@+id/b_mouitido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/label_yomikomi"
+        android:visibility="invisible"
+        app:rippleColor="#673AB7" />
+</androidx.constraintlayout.widget.ConstraintLayout>

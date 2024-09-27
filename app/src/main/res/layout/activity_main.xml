@@ -19,27 +19,9 @@
         android:onClick="b_camera"
         android:padding="0dp"
         android:scaleType="fitCenter"
-        app:layout_anchor="@+id/b_mouitido"
         app:layout_anchorGravity="center"
         app:srcCompat="@drawable/pg_camera" />
 
-    <Button
-        android:id="@+id/b_yomikomi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="読み込む"
-        android:visibility="gone"
-        app:rippleColor="#673AB7" />
-
-    <Button
-        android:id="@+id/b_mouitido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="もう一度撮る"
-        android:visibility="invisible"
-        app:rippleColor="#673AB7" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
