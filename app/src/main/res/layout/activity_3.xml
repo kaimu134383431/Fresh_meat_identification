@@ -10,18 +10,13 @@
 
 
     <!--ここから下はスクロールのためのサンプル後で変更すること！ただし、idは変えないこと！-->
-    <LinearLayout
-        android:id="@+id/l_result"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/pg_background"
-        android:orientation="vertical"
-        android:visibility="gone">
-
         <ScrollView
+            android:id="@+id/s_result"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/pg_background"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <!-- コンテンツ -->
             <LinearLayout
@@ -56,7 +51,7 @@
 
         </ScrollView>
 
-    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/l_load"
