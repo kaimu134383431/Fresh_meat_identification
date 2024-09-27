@@ -1,36 +1,28 @@
 package com.example.freshmeatidentification;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button; // 追加
 import android.widget.ImageButton;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.freshmeatidentification.databinding.ActivityMainBinding;
-
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 //gogo
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        //ボタンの参照を取得
+        ImageButton openCameraButton = findViewById(R.id.b_camera);
+        //ボタンクリック時の処理
+        openCameraButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+            startActivity(intent);
+        });
 
-//    public void b_camera(View v){
-
-//    }
-
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -53,10 +45,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
+
 }

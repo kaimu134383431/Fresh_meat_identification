@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -18,18 +20,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FreshMeatIdentification"
         tools:targetApi="31">
+
+        <activity android:name=".MainActivity"
+            android:exported="true"> <!-- android:exportedを追加 -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".CameraActivity"
             android:exported="true"
             android:theme="@style/Theme.FreshMeatIdentification">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" /> <!-- 不要であれば削除 -->
             </intent-filter>
         </activity>
 
-        <!-- AndroidManifest.xml -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -39,8 +47,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-        
 
     </application>
 
