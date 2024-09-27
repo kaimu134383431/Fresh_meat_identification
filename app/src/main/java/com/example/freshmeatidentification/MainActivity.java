@@ -1,6 +1,8 @@
 package com.example.freshmeatidentification;
 
 import android.os.Bundle;
+import android.widget.Button; // 追加
+import android.widget.ImageButton;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -17,34 +19,28 @@ import com.example.freshmeatidentification.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 //gogo
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.toolbar);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
+//    private Button b_yomikomi;
+//    private Button b_mouitido;
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//
+//        b_yomikomi = findViewById(R.id.b_yomikomi);
+//        b_mouitido = findViewById(R.id.b_mouitido);
+//    }
+//    public void b_camera(View v){
+//        b_camera.setVisibility(View.GONE);
+//        b_yomikomi.setVisibility(View.VISIBLE);
+//        b_mouitido.setVisibility(View.VISIBLE);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
