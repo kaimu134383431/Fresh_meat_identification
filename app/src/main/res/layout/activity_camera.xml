@@ -10,4 +10,14 @@
         android:text="Camera Preview"
         android:layout_centerInParent="true"/>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/cameraTextView"
+        android:scaleType="centerCrop"
+        android:contentDescription="Captured Image" />
+
+    <!-- 画像の表示方法を指定 -->
+
 </RelativeLayout>
