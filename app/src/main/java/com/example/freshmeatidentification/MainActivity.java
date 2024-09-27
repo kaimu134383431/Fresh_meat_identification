@@ -2,6 +2,7 @@ package com.example.freshmeatidentification;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
@@ -14,13 +15,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //ボタンの参照を取得
+        //カメラボタンの参照を取得
         ImageButton openCameraButton = findViewById(R.id.b_camera);
-        //ボタンクリック時の処理
+        //カメラボタンクリック時の処理
         openCameraButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CameraActivity.class);
             startActivity(intent);
         });
+
+        new Thread(()->{
+            //後で必ず変更すること～！とりあえず置いてあるだけ
+            //ロードの処理以下に記述
+            try{
+                Thread.sleep(3000);
+            }catch(InterruptedException e){
+                return;
+            }
+            runOnUiThread(() -> {
+                findViewById(R.id.l_load).setVisibility(View.GONE);
+                findViewById(R.id.s_result).setVisibility(View.VISIBLE);
+            });
+        }).start();
 
     }
     @Override
