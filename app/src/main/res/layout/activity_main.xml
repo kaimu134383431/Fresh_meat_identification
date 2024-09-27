@@ -16,7 +16,6 @@
         android:layout_gravity="center"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="@null"
-        android:onClick="b_camera"
         android:padding="0dp"
         android:scaleType="fitCenter"
         app:layout_anchorGravity="center"
