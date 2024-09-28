@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        new Thread(()->{
+        /*new Thread(()->{
             //後で必ず変更すること～！とりあえず置いてあるだけ
             //ロードの処理以下に記述
             try{
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.s_result).setVisibility(View.VISIBLE);
             });
         }).start();
-
+*/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
