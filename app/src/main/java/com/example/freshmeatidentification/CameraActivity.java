@@ -29,16 +29,31 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        // カメラとストレージのパーミッションを確認
+        // パーミッションの確認
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, REQUEST_PERMISSION);
+                !isStoragePermissionGranted()) {
+            // 必要なパーミッションをリクエスト
+            ActivityCompat.requestPermissions(this, getRequiredPermissions(), REQUEST_PERMISSION);
         } else {
-            openCameraApp(); // 両方のパーミッションが許可された場合のみ呼び出し
+            openCameraApp(); // パーミッションが許可された場合のみカメラを起動
+        }
+    }
+
+    // APIレベルに応じたストレージのパーミッションを確認するメソッド
+    private boolean isStoragePermissionGranted() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        }
+    }
+
+    // 必要なパーミッションを取得するメソッド
+    private String[] getRequiredPermissions() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            return new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_MEDIA_IMAGES};
+        } else {
+            return new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
         }
     }
 
@@ -59,7 +74,7 @@ public class CameraActivity extends AppCompatActivity {
             if (photoFile != null) {
                 try {
                     imageUri = FileProvider.getUriForFile(this,
-                            getApplicationContext().getPackageName() + ".fileprovider", // ここを修正
+                            getApplicationContext().getPackageName() + ".fileprovider", // FileProviderの設定に合わせたURI
                             photoFile);
                     if (imageUri == null) {
                         Toast.makeText(this, "URIの取得に失敗しました", Toast.LENGTH_SHORT).show();
@@ -75,13 +90,12 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-
     // 撮影した画像ファイルを保存するためのメソッド
     private File createImageFile() throws IOException {
         // 一意のファイル名を作成
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES); // getExternalFilesDirはパーミッション不要
         return File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -104,7 +118,7 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-
+    // パーミッションリクエストの結果を受け取るメソッド
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -113,12 +127,10 @@ public class CameraActivity extends AppCompatActivity {
             boolean storageGranted = grantResults.length > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
             if (cameraGranted && storageGranted) {
-                openCameraApp();
+                openCameraApp(); // パーミッションが許可された場合にカメラを起動
             } else {
-                // パーミッションが拒否された場合の処理
                 Toast.makeText(this, "カメラとストレージのパーミッションが必要です", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
 }
