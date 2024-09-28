@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -28,6 +30,30 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        // ローディングボタンと再撮影ボタンの設定
+        Button loadingButton = findViewById(R.id.b_loading);
+        Button reshootingButton = findViewById(R.id.b_reshooting);
+
+        /*// ローディングボタンが押された時の処理
+        loadingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Loading画面に移動
+                Intent intent = new Intent(CameraActivity.this, Loading.class);
+                startActivity(intent);
+                finish(); // 現在のアクティビティを終了
+            }
+        });*/
+
+        // 再撮影ボタンが押された時の処理
+        reshootingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // カメラで写真を撮るところまで戻る
+                openCameraApp();
+            }
+        });
 
         // パーミッションの確認
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
@@ -57,7 +83,7 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-
+    // カメラアプリを起動するメソッド
     private void openCameraApp() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
