@@ -22,16 +22,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.66" />
 
-    <!-- 上から3分の1の白いView -->
-    <View
-        android:id="@+id/top_white_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#FFFFFF"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideline_top"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <!-- カメラプレビューのImageView -->
     <!-- 最初のボタン (ローディングボタン) -->

@@ -15,7 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
-
+import android.graphics.Bitmap;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import android.util.Log;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -25,6 +27,7 @@ public class CameraActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_PERMISSION = 100;
     private Uri imageUri;
+    private static final String TAG = "CameraActivity"; // タグを定義
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,19 +132,59 @@ public class CameraActivity extends AppCompatActivity {
         );
     }
 
-    // カメラアプリから戻ってきた時の処理
+//    // カメラアプリから戻ってきた時の処理
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+//            // imageUriがnullでないことを確認
+//            if (imageUri != null) {
+//                ImageView imageView = findViewById(R.id.imageView); // あなたのImageViewのIDに置き換えてください
+//                imageView.setImageURI(imageUri);
+//            } else {
+//                Toast.makeText(this, "画像の取得に失敗しました", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            // imageUriがnullでないことを確認
             if (imageUri != null) {
                 ImageView imageView = findViewById(R.id.imageView); // あなたのImageViewのIDに置き換えてください
                 imageView.setImageURI(imageUri);
+
+                // 画像のアスペクト比を取得
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    adjustImageViewSize(bitmap);
+                } catch (IOException e) {
+                    Log.e(TAG, "画像の取得に失敗しました", e); // エラーログを追加
+                    Toast.makeText(this, "画像の取得に失敗しました", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(this, "画像の取得に失敗しました", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    // 画像のアスペクト比に基づいてImageViewのサイズを調整するメソッド
+    private void adjustImageViewSize(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        ImageView imageView = findViewById(R.id.imageView);
+
+        // アスペクト比に基づいてImageViewのレイアウトを調整
+        if (width > height) {
+            // 横長の場合
+            imageView.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+            imageView.getLayoutParams().height = (int) (imageView.getWidth() * ((float) height / width));
+        } else {
+            // 縦長の場合
+            imageView.getLayoutParams().height = ConstraintLayout.LayoutParams.MATCH_PARENT;
+            imageView.getLayoutParams().width = (int) (imageView.getHeight() * ((float) width / height));
+        }
+        imageView.requestLayout(); // レイアウトを再計算
     }
 
     // パーミッションリクエストの結果を受け取るメソッド
