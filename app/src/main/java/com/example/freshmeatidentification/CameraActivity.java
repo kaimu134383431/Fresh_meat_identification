@@ -175,15 +175,12 @@ public class CameraActivity extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.imageView);
 
         // アスペクト比に基づいてImageViewのレイアウトを調整
-        if (width > height) {
-            // 横長の場合
-            imageView.getLayoutParams().width = ConstraintLayout.LayoutParams.MATCH_PARENT;
-            imageView.getLayoutParams().height = (int) (imageView.getWidth() * ((float) height / width));
-        } else {
+        if (width < height) {
             // 縦長の場合
             imageView.getLayoutParams().height = ConstraintLayout.LayoutParams.MATCH_PARENT;
             imageView.getLayoutParams().width = (int) (imageView.getHeight() * ((float) width / height));
         }
+
         imageView.requestLayout(); // レイアウトを再計算
     }
 
