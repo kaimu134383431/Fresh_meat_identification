@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pg_background"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    >
 
     <!-- 上のガイドライン（上から1/3の位置） -->
     <androidx.constraintlayout.widget.Guideline
@@ -21,49 +22,48 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.66" />
 
+    <!-- 上から3分の1の白いView -->
+    <View
+        android:id="@+id/top_white_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- カメラプレビューのImageView -->
+    <!-- 最初のボタン (ローディングボタン) -->
+    <!-- 2つ目のボタン (再撮影ボタン)-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="Captured Image"
+        android:layout_marginTop="20dp"
+        android:layout_margin="8dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@id/guideline_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <!-- 説明用のTextView -->
-    <TextView
-        android:id="@+id/cameraTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#A27AFF"
-        android:text="Camera Preview"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView" />
-
-    <!-- 最初のボタン (ローディングボタン) -->
     <Button
         android:id="@+id/b_loading"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="120dp"
         android:backgroundTint="#A27AFF"
         android:text="@string/loading_button_text"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cameraTextView"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_top"
         app:layout_constraintWidth_percent="0.5" />
 
-    <!-- 2つ目のボタン (再撮影ボタン)-->
     <Button
         android:id="@+id/b_reshooting"
         android:layout_width="wrap_content"
@@ -76,6 +76,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/b_loading"
+        app:layout_constraintVertical_bias="0.325"
         app:layout_constraintWidth_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,20 +14,22 @@
         android:orientation="horizontal" />
 
     <!-- 質問のテキスト -->
+
+    <!-- 「はい」ボタン -->
+
     <TextView
         android:id="@+id/tv_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="60dp"
         android:text="@string/one_more_time_loading"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/guideline_middle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- 「はい」ボタン -->
     <Button
         android:id="@+id/b_yes"
         android:layout_width="0dp"
@@ -47,13 +49,14 @@
         android:id="@+id/b_no"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="@string/one_more_time_no"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="60dp"
         android:backgroundTint="#A27AFF"
+        android:text="@string/one_more_time_no"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/b_yes"
         app:layout_constraintWidth_percent="0.5" />
 
