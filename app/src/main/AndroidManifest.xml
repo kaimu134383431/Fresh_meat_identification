@@ -40,6 +40,17 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Loading"
+            android:exported="true"
+            android:theme="@style/Theme.FreshMeatIdentification">
+        </activity>
+
+        <activity android:name=".LoadingFailed"
+            android:exported="true"
+            android:theme="@style/Theme.FreshMeatIdentification">
+        </activity>
+
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

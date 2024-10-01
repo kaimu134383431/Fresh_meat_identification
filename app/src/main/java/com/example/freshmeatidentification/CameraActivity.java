@@ -114,15 +114,25 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            if (imageUri != null) {
-                ImageView imageView = findViewById(R.id.imageView);
-                imageView.setImageURI(imageUri);
-            } else {
-                Toast.makeText(this, "画像の取得に失敗しました", Toast.LENGTH_SHORT).show();
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            if (resultCode == RESULT_OK) {
+                // 画像を取得した場合
+                if (imageUri != null) {
+                    ImageView imageView = findViewById(R.id.imageView);
+                    imageView.setImageURI(imageUri);
+                } else {
+                    Toast.makeText(this, "画像の取得に失敗しました", Toast.LENGTH_SHORT).show();
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                // カメラを閉じた場合
+                Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // 現在のアクティビティを終了
             }
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

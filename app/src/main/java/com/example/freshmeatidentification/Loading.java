@@ -1,14 +1,17 @@
 package com.example.freshmeatidentification;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
@@ -39,6 +42,14 @@ public class Loading extends AppCompatActivity {
             return;
         }
 
+        // URIからファイルパスを取得
+        imagePath = getRealPathFromURI(Uri.parse(imagePath));
+        if (imagePath == null) {
+            Toast.makeText(this, "画像ファイルのパスが取得できませんでした", Toast.LENGTH_SHORT).show();
+            navigateToFailed();
+            return;
+        }
+
         try {
             tflite = new Interpreter(loadModelFile());
             classifyImage();
@@ -48,9 +59,12 @@ public class Loading extends AppCompatActivity {
         }
     }
 
-
     private MappedByteBuffer loadModelFile() throws IOException {
         File modelFile = new File(getExternalFilesDir(null), "meat_freshness_model.tflite");
+        if (!modelFile.exists()) {
+            Log.e(TAG, "モデルファイルが存在しません: " + modelFile.getAbsolutePath());
+            throw new IOException("モデルファイルが存在しません");
+        }
         try (FileInputStream inputStream = new FileInputStream(modelFile)) {
             FileChannel fileChannel = inputStream.getChannel();
             return fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
@@ -59,6 +73,11 @@ public class Loading extends AppCompatActivity {
 
     private void classifyImage() {
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        if (bitmap == null) {
+            Log.e(TAG, "ビットマップのデコードに失敗しました");
+            //navigateToResult();
+            return;
+        }
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true);
 
         TensorBuffer inputBuffer = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
@@ -68,8 +87,7 @@ public class Loading extends AppCompatActivity {
         tflite.run(inputBuffer.getBuffer(), result);
 
         if (result[0][0] > 0.5) {
-            //navigateToResult(); // 結果に応じた処理を追加
-            navigateToFailed();
+            navigateToFailed(); // 結果に応じた処理を追加
         } else {
             navigateToFailed();
         }
@@ -90,6 +108,20 @@ public class Loading extends AppCompatActivity {
         }
 
         buffer.loadArray(floatValues);
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        if (cursor != null) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String realPath = cursor.getString(column_index);
+            cursor.close();
+            return realPath;
+        }
+        return null;
     }
 
     /*private void navigateToResult() {
