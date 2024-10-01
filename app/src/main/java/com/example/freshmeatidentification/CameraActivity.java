@@ -35,7 +35,7 @@ public class CameraActivity extends AppCompatActivity {
         Button loadingButton = findViewById(R.id.b_loading);
         Button reshootingButton = findViewById(R.id.b_reshooting);
 
-        /*// ローディングボタンが押された時の処理
+        // ローディングボタンが押された時の処理
         loadingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +44,7 @@ public class CameraActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish(); // 現在のアクティビティを終了
             }
-        });*/
+        });
 
         // 再撮影ボタンが押された時の処理
         reshootingButton.setOnClickListener(new View.OnClickListener() {
