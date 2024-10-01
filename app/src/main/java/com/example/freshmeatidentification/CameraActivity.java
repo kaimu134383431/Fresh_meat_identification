@@ -31,41 +31,35 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        // ローディングボタンと再撮影ボタンの設定
         Button loadingButton = findViewById(R.id.b_loading);
         Button reshootingButton = findViewById(R.id.b_reshooting);
 
-        // ローディングボタンが押された時の処理
         loadingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Loading画面に移動
+                // Loading画面に画像パスを渡して移動
                 Intent intent = new Intent(CameraActivity.this, Loading.class);
+                intent.putExtra("IMAGE_PATH", imageUri.toString()); // 画像のURIを渡す
                 startActivity(intent);
-                finish(); // 現在のアクティビティを終了
+                finish();
             }
         });
 
-        // 再撮影ボタンが押された時の処理
         reshootingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // カメラで写真を撮るところまで戻る
                 openCameraApp();
             }
         });
 
-        // パーミッションの確認
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
                 !isStoragePermissionGranted()) {
-            // 必要なパーミッションをリクエスト
             ActivityCompat.requestPermissions(this, getRequiredPermissions(), REQUEST_PERMISSION);
         } else {
-            openCameraApp(); // パーミッションが許可された場合のみカメラを起動
+            openCameraApp();
         }
     }
 
-    // APIレベルに応じたストレージのパーミッションを確認するメソッド
     private boolean isStoragePermissionGranted() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
@@ -74,7 +68,6 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    // 必要なパーミッションを取得するメソッド
     private String[] getRequiredPermissions() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             return new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_MEDIA_IMAGES};
@@ -83,7 +76,6 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    // カメラアプリを起動するメソッド
     private void openCameraApp() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -94,18 +86,14 @@ public class CameraActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "画像ファイルの作成に失敗しました", Toast.LENGTH_SHORT).show();
-                return; // 処理を中止
+                return;
             }
 
             if (photoFile != null) {
                 try {
                     imageUri = FileProvider.getUriForFile(this,
-                            getApplicationContext().getPackageName() + ".fileprovider", // FileProviderの設定に合わせたURI
+                            getApplicationContext().getPackageName() + ".fileprovider",
                             photoFile);
-                    if (imageUri == null) {
-                        Toast.makeText(this, "URIの取得に失敗しました", Toast.LENGTH_SHORT).show();
-                        return; // 処理を中止
-                    }
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 } catch (Exception e) {
@@ -116,27 +104,19 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    // 撮影した画像ファイルを保存するためのメソッド
     private File createImageFile() throws IOException {
-        // 一意のファイル名を作成
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES); // getExternalFilesDirはパーミッション不要
-        return File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        return File.createTempFile(imageFileName, ".jpg", storageDir);
     }
 
-    // カメラアプリから戻ってきた時の処理
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            // imageUriがnullでないことを確認
             if (imageUri != null) {
-                ImageView imageView = findViewById(R.id.imageView); // あなたのImageViewのIDに置き換えてください
+                ImageView imageView = findViewById(R.id.imageView);
                 imageView.setImageURI(imageUri);
             } else {
                 Toast.makeText(this, "画像の取得に失敗しました", Toast.LENGTH_SHORT).show();
@@ -144,7 +124,6 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    // パーミッションリクエストの結果を受け取るメソッド
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -153,7 +132,7 @@ public class CameraActivity extends AppCompatActivity {
             boolean storageGranted = grantResults.length > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
             if (cameraGranted && storageGranted) {
-                openCameraApp(); // パーミッションが許可された場合にカメラを起動
+                openCameraApp();
             } else {
                 Toast.makeText(this, "カメラとストレージのパーミッションが必要です", Toast.LENGTH_SHORT).show();
             }

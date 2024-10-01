@@ -19,7 +19,7 @@ public class LoadingFailed extends AppCompatActivity {
         bNo = findViewById(R.id.b_no);
 
         // 「はい」ボタンのクリックリスナー
-        /*bYes.setOnClickListener(new View.OnClickListener() {
+        bYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Loadingアクティビティを再起動する
@@ -27,7 +27,7 @@ public class LoadingFailed extends AppCompatActivity {
                 startActivity(intent);
                 finish(); // 現在のアクティビティを終了
             }
-        });*/
+        });
 
         // 「いいえ」ボタンのクリックリスナー
         bNo.setOnClickListener(new View.OnClickListener() {

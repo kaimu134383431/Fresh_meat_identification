@@ -21,19 +21,24 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
 public class Loading extends AppCompatActivity {
-    private static final String TAG = "LoadingActivity";
+    private static final String TAG = "activity_loading";
     private Interpreter tflite;
-    private String imagePath; // 画像パスを保存
+    private String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
-        // Intent から画像パスを取得
+        // Intentから画像パスを取得
         imagePath = getIntent().getStringExtra("IMAGE_PATH");
+        if (imagePath == null) {
+            Toast.makeText(this, "画像パスが取得できませんでした", Toast.LENGTH_SHORT).show();
+            // エラー時にLoadingFailedアクティビティに遷移する
+            navigateToFailed();
+            return;
+        }
 
-        // TensorFlow Lite モデルを読み込む
         try {
             tflite = new Interpreter(loadModelFile());
             classifyImage();
@@ -43,7 +48,7 @@ public class Loading extends AppCompatActivity {
         }
     }
 
-    // モデルファイルを読み込むメソッド
+
     private MappedByteBuffer loadModelFile() throws IOException {
         File modelFile = new File(getExternalFilesDir(null), "meat_freshness_model.tflite");
         try (FileInputStream inputStream = new FileInputStream(modelFile)) {
@@ -52,37 +57,31 @@ public class Loading extends AppCompatActivity {
         }
     }
 
-    // 画像を推論するメソッド
     private void classifyImage() {
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true); // 必要に応じてリサイズ
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true);
 
-        // Bitmapをモデルに渡すためのテンソルに変換
         TensorBuffer inputBuffer = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
         convertBitmapToTensorBuffer(resizedBitmap, inputBuffer);
 
-        // 結果を保存する配列
         float[][] result = new float[1][1];
-
-        // 推論を実行
         tflite.run(inputBuffer.getBuffer(), result);
 
-        // 結果に基づいて遷移
         if (result[0][0] > 0.5) {
-            //navigateToResult();
+            //navigateToResult(); // 結果に応じた処理を追加
+            navigateToFailed();
         } else {
             navigateToFailed();
         }
     }
 
-    // Bitmap を TensorBuffer に変換するメソッド
     private void convertBitmapToTensorBuffer(Bitmap bitmap, TensorBuffer buffer) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         int[] intValues = new int[width * height];
         bitmap.getPixels(intValues, 0, width, 0, 0, width, height);
 
-        float[] floatValues = new float[width * height * 3]; // RGBそれぞれ3チャンネル
+        float[] floatValues = new float[width * height * 3];
         for (int i = 0; i < intValues.length; ++i) {
             int val = intValues[i];
             floatValues[i * 3] = ((val >> 16) & 0xFF) / 255.0f; // R
@@ -103,13 +102,5 @@ public class Loading extends AppCompatActivity {
         Intent intent = new Intent(this, LoadingFailed.class);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (tflite != null) {
-            tflite.close();
-        }
     }
 }
