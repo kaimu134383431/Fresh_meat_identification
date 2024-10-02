@@ -45,6 +45,11 @@
             android:theme="@style/Theme.FreshMeatIdentification">
         </activity>
 
+        <activity android:name=".Result"
+            android:exported="true"
+            android:theme="@style/Theme.FreshMeatIdentification">
+        </activity>
+
         <activity android:name=".LoadingFailed"
             android:exported="true"
             android:theme="@style/Theme.FreshMeatIdentification">
