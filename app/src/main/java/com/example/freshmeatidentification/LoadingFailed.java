@@ -22,12 +22,17 @@ public class LoadingFailed extends AppCompatActivity {
         bYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Loadingアクティビティを再起動する
+                // Intentに画像パスを再度渡す
                 Intent intent = new Intent(LoadingFailed.this, Loading.class);
+                String imagePath = getIntent().getStringExtra("IMAGE_PATH");
+                if (imagePath != null) {
+                    intent.putExtra("IMAGE_PATH", imagePath); // 画像パスを再渡し
+                }
                 startActivity(intent);
-                finish(); // 現在のアクティビティを終了
+                finish();
             }
         });
+
 
         // 「いいえ」ボタンのクリックリスナー
         bNo.setOnClickListener(new View.OnClickListener() {

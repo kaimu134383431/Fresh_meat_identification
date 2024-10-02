@@ -11,7 +11,8 @@ import android.util.Log;
 import android.widget.Toast;
 import java.io.InputStream;
 import java.io.IOException;
-
+import android.content.res.AssetFileDescriptor;
+import java.util.Arrays;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
@@ -63,19 +64,19 @@ public class Loading extends AppCompatActivity {
     }
 
     private MappedByteBuffer loadModelFile() throws IOException {
-        File modelFile = new File(getExternalFilesDir(null), "meat_freshness_model.tflite");
-        if (!modelFile.exists()) {
-            Log.e(TAG, "モデルファイルが存在しません: " + modelFile.getAbsolutePath());
-            throw new IOException("モデルファイルが存在しません");
-        }
-        try (FileInputStream inputStream = new FileInputStream(modelFile)) {
-            FileChannel fileChannel = inputStream.getChannel();
-            return fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
+        try (AssetFileDescriptor fileDescriptor = getAssets().openFd("meat_freshness_model.tflite");
+             FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
+             FileChannel fileChannel = inputStream.getChannel()) {
+
+            long startOffset = fileDescriptor.getStartOffset();
+            long declaredLength = fileDescriptor.getDeclaredLength();
+            return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
         }
     }
 
+
+
     private void classifyImage() {
-        // URIから直接ビットマップを取得
         Bitmap bitmap = getBitmapFromUri(Uri.parse(imagePath));
         if (bitmap == null) {
             Log.e(TAG, "ビットマップのデコードに失敗しました");
@@ -83,20 +84,34 @@ public class Loading extends AppCompatActivity {
             return;
         }
 
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true);
+        // 入力画像サイズを416x416にリサイズ
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 416, 416, true);
 
-        TensorBuffer inputBuffer = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+        TensorBuffer inputBuffer = TensorBuffer.createFixedSize(new int[]{1, 416, 416, 3}, DataType.FLOAT32);
         convertBitmapToTensorBuffer(resizedBitmap, inputBuffer);
 
-        float[][] result = new float[1][1];
+        // 出力バッファのサイズを [1, 3] に修正
+        float[][] result = new float[1][3];
         tflite.run(inputBuffer.getBuffer(), result);
 
-        if (result[0][0] > 0.5) {
-            navigateToFailed(); // 結果に応じた処理を追加
+        // 出力結果の解釈
+        float[] probabilities = result[0];
+        String meatCondition;
+
+        if (probabilities[0] > probabilities[1] && probabilities[0] > probabilities[2]) {
+            meatCondition = "flesh";
+        } else if (probabilities[1] > probabilities[0] && probabilities[1] > probabilities[2]) {
+            meatCondition = "half flesh";
         } else {
-            navigateToFailed();
+            meatCondition = "spoiled";
         }
+
+        // Result画面に遷移
+        //navigateToResult(meatCondition);
+        navigateToFailed();
     }
+
+
 
 
     private void convertBitmapToTensorBuffer(Bitmap bitmap, TensorBuffer buffer) {
@@ -144,6 +159,10 @@ public class Loading extends AppCompatActivity {
 
     private void navigateToFailed() {
         Intent intent = new Intent(this, LoadingFailed.class);
+        String imagePath = getIntent().getStringExtra("IMAGE_PATH");
+        if (imagePath != null) {
+            intent.putExtra("IMAGE_PATH", imagePath); // 画像パスを再渡し
+        }
         startActivity(intent);
         finish();
     }
