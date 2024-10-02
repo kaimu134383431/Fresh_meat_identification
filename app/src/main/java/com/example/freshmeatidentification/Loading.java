@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
+import java.io.InputStream;
+import java.io.IOException;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
@@ -72,12 +75,14 @@ public class Loading extends AppCompatActivity {
     }
 
     private void classifyImage() {
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        // URIから直接ビットマップを取得
+        Bitmap bitmap = getBitmapFromUri(Uri.parse(imagePath));
         if (bitmap == null) {
             Log.e(TAG, "ビットマップのデコードに失敗しました");
-            //navigateToResult();
+            navigateToFailed();
             return;
         }
+
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true);
 
         TensorBuffer inputBuffer = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
@@ -92,6 +97,7 @@ public class Loading extends AppCompatActivity {
             navigateToFailed();
         }
     }
+
 
     private void convertBitmapToTensorBuffer(Bitmap bitmap, TensorBuffer buffer) {
         int width = bitmap.getWidth();
@@ -111,18 +117,24 @@ public class Loading extends AppCompatActivity {
     }
 
     private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
-        Cursor cursor = loader.loadInBackground();
-        if (cursor != null) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            String realPath = cursor.getString(column_index);
-            cursor.close();
-            return realPath;
+        if ("content".equals(contentUri.getScheme())) {
+            return contentUri.toString();  // ファイルパスの代わりにUriを直接返す
+        } else if ("file".equals(contentUri.getScheme())) {
+            return contentUri.getPath();
         }
         return null;
     }
+
+    private Bitmap getBitmapFromUri(Uri contentUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(contentUri);
+            return BitmapFactory.decodeStream(inputStream);
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to open InputStream from Uri", e);
+            return null;
+        }
+    }
+
 
     /*private void navigateToResult() {
         Intent intent = new Intent(this, Result.class);
