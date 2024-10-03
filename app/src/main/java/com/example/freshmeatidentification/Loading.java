@@ -97,6 +97,7 @@ public class Loading extends AppCompatActivity {
         // 出力結果の解釈
         float[] probabilities = result[0];
         String meatCondition;
+        Log.d(TAG, "Probabilities: " + Arrays.toString(probabilities));
 
         if (probabilities[0] > probabilities[1] && probabilities[0] > probabilities[2]) {
             meatCondition = "flesh";
@@ -107,8 +108,7 @@ public class Loading extends AppCompatActivity {
         }
 
         // Result画面に遷移
-        //navigateToResult(meatCondition);
-        navigateToFailed();
+        navigateToResult(meatCondition);
     }
 
 
@@ -151,11 +151,16 @@ public class Loading extends AppCompatActivity {
     }
 
 
-    /*private void navigateToResult() {
+    private void navigateToResult(String meatCondition) {
         Intent intent = new Intent(this, Result.class);
+        intent.putExtra("MEAT_CONDITION", meatCondition); // 推論結果を渡す
+        String imagePath = getIntent().getStringExtra("IMAGE_PATH");
+        if (imagePath != null) {
+            intent.putExtra("IMAGE_PATH", imagePath); // 画像パスを再渡し
+        }
         startActivity(intent);
         finish();
-    }*/
+    }
 
     private void navigateToFailed() {
         Intent intent = new Intent(this, LoadingFailed.class);
