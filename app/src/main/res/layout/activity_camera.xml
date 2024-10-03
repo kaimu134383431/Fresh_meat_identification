@@ -23,11 +23,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.66" />
 
-
-
     <!-- カメラプレビューのImageView -->
-    <!-- 最初のボタン (ローディングボタン) -->
-    <!-- 2つ目のボタン (再撮影ボタン)-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
@@ -41,6 +37,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
+    <!-- 読み込むボタン -->
     <Button
         android:id="@+id/b_loading"
         android:layout_width="240dp"
@@ -56,6 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline_top"
         app:layout_constraintWidth_percent="0.5" />
 
+    <!-- 再撮影ボタン -->
     <Button
         android:id="@+id/b_reshooting"
         android:layout_width="wrap_content"
@@ -71,36 +69,41 @@
         app:layout_constraintVertical_bias="0.219"
         app:layout_constraintWidth_percent="0.5" />
 
+    <!-- 豚のイラストを下に横並びで配置 -->
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="200dp"
-        android:layout_height="167dp"
-        app:srcCompat="@drawable/pg_pig"
-        tools:layout_editor_absoluteX="-11dp"
-        tools:layout_editor_absoluteY="559dp" />
+        android:id="@+id/pig1"
+        android:layout_width="156dp"
+        android:layout_height="166dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pig2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/pg_pig" />
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="110dp"
-        android:layout_height="111dp"
-        app:srcCompat="@drawable/pg_pig"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="604dp" />
+        android:id="@+id/pig2"
+        android:layout_width="106dp"
+        android:layout_height="144dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pig3"
+        app:layout_constraintStart_toEndOf="@+id/pig1"
+        app:srcCompat="@drawable/pg_pig" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="89dp"
-        android:layout_height="70dp"
-        app:srcCompat="@drawable/pg_pig"
-        tools:layout_editor_absoluteX="255dp"
-        tools:layout_editor_absoluteY="636dp" />
+        android:id="@+id/pig3"
+        android:layout_width="75dp"
+        android:layout_height="119dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pig4"
+        app:layout_constraintStart_toEndOf="@+id/pig2"
+        app:srcCompat="@drawable/pg_pig" />
 
     <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="51dp"
-        android:layout_height="61dp"
-        app:srcCompat="@drawable/pg_pig"
-        tools:layout_editor_absoluteX="344dp"
-        tools:layout_editor_absoluteY="645dp" />
+        android:id="@+id/pig4"
+        android:layout_width="50dp"
+        android:layout_height="107dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pig3"
+        app:srcCompat="@drawable/pg_pig" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
