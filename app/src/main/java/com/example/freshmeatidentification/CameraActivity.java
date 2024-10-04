@@ -11,10 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.provider.Settings;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -144,7 +147,12 @@ public class CameraActivity extends AppCompatActivity {
             if (cameraGranted && storageGranted) {
                 openCameraApp();
             } else {
-                Toast.makeText(this, "カメラとストレージのパーミッションが必要です", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "カメラとストレージの許可が必要です。設定画面で許可してください。", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+                finish(); // 現在のアクティビティを終了
             }
         }
     }
