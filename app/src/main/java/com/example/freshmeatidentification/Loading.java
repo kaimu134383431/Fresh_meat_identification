@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,11 +31,17 @@ public class Loading extends AppCompatActivity {
     private Interpreter tflite;
     private String imagePath;
     private ExecutorService executorService;
+    private ProgressBar progressBar;
+    private TextView progressPercentageTextView; // 追加：進捗パーセンテージ表示用
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+
+        // UIコンポーネントの初期化
+        progressBar = findViewById(R.id.progress_bar);
+        progressPercentageTextView = findViewById(R.id.progress_percentage);
 
         // ExecutorServiceの初期化
         executorService = Executors.newSingleThreadExecutor();
@@ -105,6 +113,13 @@ public class Loading extends AppCompatActivity {
             tflite.run(inputBuffer.getBuffer(), result);
 
             patchResults[i] = result[0];  // 各パッチの結果を保存
+
+            // 進捗を更新
+            final int progress = (i + 1) * 100 / patches.length; // 現在の進捗パーセンテージ
+            runOnUiThread(() -> {
+                progressBar.setProgress(progress);
+                progressPercentageTextView.setText(progress + "%");
+            });
         }
 
         // 結果の集計や次の画面への遷移
