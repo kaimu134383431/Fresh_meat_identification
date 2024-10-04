@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/pg_background"
     android:padding="16dp">
+
     <!-- 中央のガイドライン（上から2/4の位置） -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_middle"
@@ -73,4 +74,40 @@
         app:layout_constraintTop_toBottomOf="@id/b_yes"
         app:layout_constraintWidth_percent="0.5" />
 
+    <!-- 豚のイラストを下に横並びで配置 -->
+    <ImageView
+        android:id="@+id/pig1"
+        android:layout_width="156dp"
+        android:layout_height="166dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pig2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/pg_pig" />
+
+    <ImageView
+        android:id="@+id/pig2"
+        android:layout_width="106dp"
+        android:layout_height="144dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pig3"
+        app:layout_constraintStart_toEndOf="@+id/pig1"
+        app:srcCompat="@drawable/pg_pig" />
+
+    <ImageView
+        android:id="@+id/pig3"
+        android:layout_width="75dp"
+        android:layout_height="119dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pig4"
+        app:layout_constraintStart_toEndOf="@+id/pig2"
+        app:srcCompat="@drawable/pg_pig" />
+
+    <ImageView
+        android:id="@+id/pig4"
+        android:layout_width="50dp"
+        android:layout_height="107dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pig3"
+        app:srcCompat="@drawable/pg_pig" />
 </androidx.constraintlayout.widget.ConstraintLayout>
