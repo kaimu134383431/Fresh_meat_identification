@@ -28,7 +28,7 @@ import org.tensorflow.lite.DataType;
 
 public class Loading extends AppCompatActivity {
     private static final String TAG = "activity_loading";
-    private Interpreter tflite;
+    private Interpreter tfliteInterpreter;
     private String imagePath;
     private ExecutorService executorService;
     private ProgressBar progressBar;
@@ -64,7 +64,7 @@ public class Loading extends AppCompatActivity {
         // 非同期でモデル読み込みと推論処理を開始
         executorService.execute(() -> {
             try {
-                tflite = new Interpreter(loadModelFile());
+                tfliteInterpreter = new Interpreter(loadModelFile());
                 classifyImage();
             } catch (IOException e) {
                 Log.e(TAG, "モデルの読み込みに失敗しました", e);
@@ -110,7 +110,7 @@ public class Loading extends AppCompatActivity {
             convertBitmapToTensorBuffer(resizedPatch, inputBuffer);
 
             float[][] result = new float[1][3];
-            tflite.run(inputBuffer.getBuffer(), result);
+            tfliteInterpreter.run(inputBuffer.getBuffer(), result);
 
             patchResults[i] = result[0];  // 各パッチの結果を保存
 

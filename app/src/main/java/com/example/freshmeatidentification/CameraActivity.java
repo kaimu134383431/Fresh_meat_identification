@@ -11,12 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.provider.Settings;
+import android.util.Log;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -75,32 +76,32 @@ public class CameraActivity extends AppCompatActivity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
+            File photoFile;
             try {
                 photoFile = createImageFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("CameraActivity", "画像ファイルの作成に失敗しました", e);  // エラーをログに記録
                 Toast.makeText(this, "画像ファイルの作成に失敗しました", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if (photoFile != null) {
-                try {
-                    imageUri = FileProvider.getUriForFile(this,
-                            getApplicationContext().getPackageName() + ".fileProvider",
-                            photoFile);
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "URIの取得に失敗しました", Toast.LENGTH_SHORT).show();
-                }
+            try {
+                imageUri = FileProvider.getUriForFile(this,
+                        getApplicationContext().getPackageName() + ".fileProvider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            } catch (Exception e) {
+                Log.e("CameraActivity", "URIの取得に失敗しました", e);  // ログに記録
+                Toast.makeText(this, "URIの取得に失敗しました", Toast.LENGTH_SHORT).show();
             }
+
         }
     }
 
     private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(imageFileName, ".jpg", storageDir);

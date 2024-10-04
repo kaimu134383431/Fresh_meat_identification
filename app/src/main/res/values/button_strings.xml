@@ -6,6 +6,7 @@
     <!--activity_3-->
     <string name="loading_load_text">ロード中だよ&#8230;</string>
     <!--activity_4-->
+    <string name="one_more_time_message">解析に失敗しちゃった！</string>
     <string name="one_more_time_loading">もう一度読み込む？</string>
     <string name="one_more_time_yes">YES</string>
     <string name="one_more_time_no">NO</string>

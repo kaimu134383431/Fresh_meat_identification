@@ -4,6 +4,8 @@
     <!-- Strings used for fragments for navigation -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="result_here">結果がここに表示されます</string>
+    <string name="default_percentage">新鮮: 0%\n半分新鮮: 0%\n腐敗: 0%</string>
 
 
 </resources>

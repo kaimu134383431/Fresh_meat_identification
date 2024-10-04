@@ -7,22 +7,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Result extends AppCompatActivity {
-    private ImageView imageView;
     private TextView result1TextView;
     private TextView result2TextView;
     private TextView result3TextView;
-    private TextView percentageTextView; // パーセンテージ表示用
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        imageView = findViewById(R.id.imageView);
+        ImageView imageView = findViewById(R.id.imageView);
         result1TextView = findViewById(R.id.result1_text_view);
         result2TextView = findViewById(R.id.result2_text_view);
         result3TextView = findViewById(R.id.result3_text_view);
-        percentageTextView = findViewById(R.id.percentage_text_view); // パーセンテージ表示用
+        TextView percentageTextView = findViewById(R.id.percentage_text_view); // パーセンテージ表示用
 
         // Intentからデータを取得
         String imagePath = getIntent().getStringExtra("IMAGE_PATH");
@@ -51,8 +48,15 @@ public class Result extends AppCompatActivity {
         }
 
         // パーセンテージを表示
-        String percentageText = String.format("新鮮: %.1f%%\n半分新鮮: %.1f%%\n腐敗: %.1f%%", fleshPercentage, halfFleshPercentage, spoiledPercentage);
+        String percentageText;
+
+        if (fleshPercentage < 0 || halfFleshPercentage < 0 || spoiledPercentage < 0) {
+            percentageText = "データがありません"; // エラーハンドリング
+        } else {
+            percentageText = String.format("新鮮: %.1f%%\n半分新鮮: %.1f%%\n腐敗: %.1f%%", fleshPercentage, halfFleshPercentage, spoiledPercentage);
+        }
         percentageTextView.setText(percentageText);
+
 
         // 結果に応じたコメントを設定
         if ("flesh".equals(meatCondition)) {
