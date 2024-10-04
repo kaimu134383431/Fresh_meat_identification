@@ -1,7 +1,5 @@
 package com.example.freshmeatidentification;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -13,7 +11,7 @@ public class Result extends AppCompatActivity {
     private TextView result1TextView;
     private TextView result2TextView;
     private TextView result3TextView;
-    private TextView percentageTextView; // 追加：パーセンテージ表示用
+    private TextView percentageTextView; // パーセンテージ表示用
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +22,7 @@ public class Result extends AppCompatActivity {
         result1TextView = findViewById(R.id.result1_text_view);
         result2TextView = findViewById(R.id.result2_text_view);
         result3TextView = findViewById(R.id.result3_text_view);
-        percentageTextView = findViewById(R.id.percentage_text_view); // 追加：パーセンテージ表示用
+        percentageTextView = findViewById(R.id.percentage_text_view); // パーセンテージ表示用
 
         // Intentからデータを取得
         String imagePath = getIntent().getStringExtra("IMAGE_PATH");

@@ -32,7 +32,7 @@ public class Loading extends AppCompatActivity {
     private String imagePath;
     private ExecutorService executorService;
     private ProgressBar progressBar;
-    private TextView progressPercentageTextView; // 追加：進捗パーセンテージ表示用
+    private TextView progressPercentageTextView; // 進捗パーセンテージ表示用
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,5 +235,4 @@ public class Loading extends AppCompatActivity {
         finish();
     }
 
-    // そのほかのヘルパーメソッド（getRealPathFromURI、getBitmapFromUri、convertBitmapToTensorBufferなど）
 }
