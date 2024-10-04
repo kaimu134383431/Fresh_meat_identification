@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -37,23 +36,15 @@ public class CameraActivity extends AppCompatActivity {
         Button loadingButton = findViewById(R.id.b_loading);
         Button reshootingButton = findViewById(R.id.b_reshooting);
 
-        loadingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Loading画面に画像パスを渡して移動
-                Intent intent = new Intent(CameraActivity.this, Loading.class);
-                intent.putExtra("IMAGE_PATH", imageUri.toString()); // 画像のURIを渡す
-                startActivity(intent);
-                finish();
-            }
+        loadingButton.setOnClickListener(v -> {
+            // Loading画面に画像パスを渡して移動
+            Intent intent = new Intent(CameraActivity.this, Loading.class);
+            intent.putExtra("IMAGE_PATH", imageUri.toString()); // 画像のURIを渡す
+            startActivity(intent);
+            finish();
         });
 
-        reshootingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCameraApp();
-            }
-        });
+        reshootingButton.setOnClickListener(v -> openCameraApp());
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
                 !isStoragePermissionGranted()) {
@@ -62,6 +53,7 @@ public class CameraActivity extends AppCompatActivity {
             openCameraApp();
         }
     }
+
 
     private boolean isStoragePermissionGranted() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
@@ -95,7 +87,7 @@ public class CameraActivity extends AppCompatActivity {
             if (photoFile != null) {
                 try {
                     imageUri = FileProvider.getUriForFile(this,
-                            getApplicationContext().getPackageName() + ".fileprovider",
+                            getApplicationContext().getPackageName() + ".fileProvider",
                             photoFile);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
