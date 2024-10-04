@@ -51,7 +51,7 @@ public class Result extends AppCompatActivity {
         }
 
         // パーセンテージを表示
-        String percentageText = String.format("新鮮: %.2f%%\n半分新鮮: %.2f%%\n腐敗: %.2f%%", fleshPercentage, halfFleshPercentage, spoiledPercentage);
+        String percentageText = String.format("新鮮: %.1f%%\n半分新鮮: %.1f%%\n腐敗: %.1f%%", fleshPercentage, halfFleshPercentage, spoiledPercentage);
         percentageTextView.setText(percentageText);
 
         // 結果に応じたコメントを設定
