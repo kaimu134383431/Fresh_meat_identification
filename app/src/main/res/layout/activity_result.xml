@@ -5,21 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pg_background">
+
     <!-- 上のガイドライン（上から1/3の位置） -->
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:layout_marginTop="20dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@id/guideline_top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
         android:layout_width="wrap_content"
@@ -35,8 +22,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.60" />
 
-
-    <!--カメライメージ-->
+    <!-- カメライメージ -->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
@@ -50,7 +36,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <!--結果のパーセント表示-->
+    <!-- 結果のパーセント表示 -->
+    <TextView
+        android:id="@+id/percentage_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="新鮮: 0%\n半分新鮮: 0%\n腐敗: 0%"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 肉の状態コメント 1 -->
     <TextView
         android:id="@+id/result1_text_view"
         android:layout_width="wrap_content"
@@ -60,12 +59,12 @@
         android:text="結果がここに表示されます"
         android:textColor="#001F3F"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/percentage_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.41" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <!-- 肉の状態コメント 2 -->
     <TextView
         android:id="@+id/result2_text_view"
         android:layout_width="wrap_content"
@@ -75,12 +74,11 @@
         android:text="結果がここに表示されます"
         android:textColor="#001F3F"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/result1_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- 肉の状態コメント 3 -->
     <TextView
         android:id="@+id/result3_text_view"
         android:layout_width="wrap_content"
@@ -90,14 +88,11 @@
         android:text="結果がここに表示されます"
         android:textColor="#001F3F"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/result2_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-
-    <!--表-->
+    <!-- 表イメージ -->
     <ImageView
         android:id="@+id/my_image_view"
         android:layout_width="374dp"
