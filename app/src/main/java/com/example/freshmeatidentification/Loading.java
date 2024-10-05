@@ -43,6 +43,9 @@ public class Loading extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         progressPercentageTextView = findViewById(R.id.progress_percentage);
 
+        // プログレスバーの最大値を設定
+        progressBar.setMax(100);
+
         // ExecutorServiceの初期化
         executorService = Executors.newSingleThreadExecutor();
 
@@ -96,7 +99,10 @@ public class Loading extends AppCompatActivity {
         Bitmap bitmap = getBitmapFromUri(Uri.parse(imagePath));
         if (bitmap == null) {
             Log.e(TAG, "ビットマップのデコードに失敗しました");
-            navigateToFailed();
+            runOnUiThread(() -> {
+                Toast.makeText(this, "ビットマップのデコードに失敗しました", Toast.LENGTH_SHORT).show();
+                navigateToFailed();
+            });
             return;
         }
 
@@ -104,22 +110,29 @@ public class Loading extends AppCompatActivity {
         Bitmap[] patches = splitImageIntoPatches(bitmap, 10);
         float[][] patchResults = new float[patches.length][3];
 
-        for (int i = 0; i < patches.length; i++) {
-            Bitmap resizedPatch = Bitmap.createScaledBitmap(patches[i], 416, 416, true);
-            TensorBuffer inputBuffer = TensorBuffer.createFixedSize(new int[]{1, 416, 416, 3}, DataType.FLOAT32);
-            convertBitmapToTensorBuffer(resizedPatch, inputBuffer);
+        try {
+            for (int i = 0; i < patches.length; i++) {
+                Bitmap resizedPatch = Bitmap.createScaledBitmap(patches[i], 416, 416, true);
+                TensorBuffer inputBuffer = TensorBuffer.createFixedSize(new int[]{1, 416, 416, 3}, DataType.FLOAT32);
+                convertBitmapToTensorBuffer(resizedPatch, inputBuffer);
 
-            float[][] result = new float[1][3];
-            tfliteInterpreter.run(inputBuffer.getBuffer(), result);
+                float[][] result = new float[1][3];
+                tfliteInterpreter.run(inputBuffer.getBuffer(), result);
 
-            patchResults[i] = result[0];  // 各パッチの結果を保存
+                patchResults[i] = result[0]; // 各パッチの結果を保存
 
-            // 進捗を更新
-            final int progress = (i + 1) * 100 / patches.length; // 現在の進捗パーセンテージ
-            runOnUiThread(() -> {
-                progressBar.setProgress(progress);
-                progressPercentageTextView.setText(progress + "%");
-            });
+                // 進捗を更新
+                final int progress = (i + 1) * 100 / patches.length; // 現在の進捗パーセンテージ
+                if(progress % 5 == 0) {
+                    runOnUiThread(() -> {
+                        progressBar.setProgress(progress);
+                        progressPercentageTextView.setText(progress + "%");
+                    });
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "画像処理中にエラーが発生しました", e);
+            navigateToFailed();
         }
 
         // 結果の集計や次の画面への遷移

@@ -5,7 +5,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="result_here">結果がここに表示されます</string>
-    <string name="default_percentage">新鮮: 0%\n半分新鮮: 0%\n腐敗: 0%</string>
+    <string name="default_percentage">Flesh: 0%\nHalf-flesh: 0%\nSpoiled: 0%</string>
     <!--result-->
     <string name="first_return">最初の画面に戻る</string>
     <string name="end">終了</string>

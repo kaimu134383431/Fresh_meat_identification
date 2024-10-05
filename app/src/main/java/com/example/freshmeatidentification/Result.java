@@ -84,7 +84,7 @@ public class Result extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Intentを使って新しいアクティビティに遷移
-                Intent intent = new Intent(Result.this, CameraActivity.class); // MainActivityに遷移
+                Intent intent = new Intent(Result.this, MainActivity.class); // MainActivityに遷移
                 startActivity(intent); // アクティビティを開始
             }
         });

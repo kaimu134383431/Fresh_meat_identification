@@ -15,7 +15,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/loading_load_text" />
+            android:text="@string/loading_load_text"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" /> <!-- テキストの色を設定 -->
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -23,16 +25,18 @@
             android:layout_height="wrap_content"
             android:indeterminate="false"
             android:max="100"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_marginTop="16dp"/> <!-- プログレスバーとテキストの間にマージンを追加 -->
 
         <TextView
             android:id="@+id/progress_percentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0%"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/black" /> <!-- テキストのサイズと色を設定 -->
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
