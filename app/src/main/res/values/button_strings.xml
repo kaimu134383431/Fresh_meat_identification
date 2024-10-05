@@ -4,7 +4,7 @@
     <string name="loading_button_text">読み込む</string>
     <string name="reshooting_button_text">もう一度撮影する</string>
     <!--activity_3-->
-    <string name="loading_load_text">ロード中だよ&#8230;</string>
+    <string name="loading_load_text">分析中&#8230;</string>
     <!--activity_4-->
     <string name="one_more_time_message">解析に失敗しちゃった！</string>
     <string name="one_more_time_loading">もう一度読み込む？</string>
