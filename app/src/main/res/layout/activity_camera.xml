@@ -37,14 +37,19 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <!-- 読み込むボタン -->
+
+    <!-- 再撮影ボタン -->
+
+    <!-- 豚のイラストを下に横並びで配置 -->
+
     <Button
         android:id="@+id/b_loading"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="60dp"
         android:backgroundTint="#A27AFF"
-        android:textColor="#FFFFFF"
         android:text="@string/loading_button_text"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -52,25 +57,22 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline_top"
         app:layout_constraintWidth_percent="0.5" />
 
-    <!-- 再撮影ボタン -->
     <Button
         android:id="@+id/b_reshooting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#A27AFF"
-        android:textColor="#FFFFFF"
         android:text="@string/reshooting_button_text"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
 
         app:layout_constraintTop_toBottomOf="@id/b_loading"
-        app:layout_constraintVertical_bias="0.219"
+        app:layout_constraintVertical_bias="0.222"
         app:layout_constraintWidth_percent="0.5" />
 
-    <!-- 豚のイラストを下に横並びで配置 -->
     <ImageView
         android:id="@+id/pig1"
         android:layout_width="156dp"
