@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Button;
+import android.view.View;
+import android.content.Intent;
 
 public class Result extends AppCompatActivity {
     private TextView result1TextView;
@@ -75,6 +78,24 @@ public class Result extends AppCompatActivity {
             result3TextView.setText("捨ててねー！！");
             setAllTextColors(0xFFFF0000); // 赤色
         }
+        Button firstReturnButton = findViewById(R.id.first_return_button);
+        //ボタンの処理最初の画面に戻る
+        firstReturnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intentを使って新しいアクティビティに遷移
+                Intent intent = new Intent(Result.this, CameraActivity.class); // MainActivityに遷移
+                startActivity(intent); // アクティビティを開始
+            }
+        });
+        // ボタンの処理終了時
+        Button endButton = findViewById(R.id.end_button);
+        endButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity(); // アプリ全体を終了
+            }
+        });
     }
 
     // すべてのTextViewの色を変更するメソッド
@@ -83,4 +104,6 @@ public class Result extends AppCompatActivity {
         result2TextView.setTextColor(color);
         result3TextView.setTextColor(color);
     }
+
+
 }
