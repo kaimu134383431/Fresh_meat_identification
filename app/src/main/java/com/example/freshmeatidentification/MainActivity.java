@@ -2,7 +2,6 @@ package com.example.freshmeatidentification;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
@@ -23,20 +22,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        /*new Thread(()->{
-            //後で必ず変更すること～！とりあえず置いてあるだけ
-            //ロードの処理以下に記述
-            try{
-                Thread.sleep(3000);
-            }catch(InterruptedException e){
-                return;
-            }
-            runOnUiThread(() -> {
-                findViewById(R.id.l_load).setVisibility(View.GONE);
-                findViewById(R.id.s_result).setVisibility(View.VISIBLE);
-            });
-        }).start();
-*/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
