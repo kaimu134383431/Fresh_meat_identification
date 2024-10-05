@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pg_background"
-    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-
-
     <!-- ImageButton: カメラボタン -->
+
+    <ImageView
+        android:id="@+id/pig_strings"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:src="@drawable/pg_moji"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/b_camera"
         android:layout_width="267dp"
         android:layout_height="252dp"
-        android:layout_gravity="center"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="@null"
         android:padding="0dp"
         android:scaleType="fitCenter"
-        app:layout_anchorGravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/pig_strings2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pig_strings"
+        app:layout_constraintVertical_bias="0.794"
         app:srcCompat="@drawable/pg_camera" />
 
-    <!-- 追加する TextView: カメラの下に表示するテキスト -->
-
-    <!-- 説明テキスト -->
-    <TextView
-        android:id="@+id/tap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/b_camera"
-        android:text="↑TAP!!"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/explanation"
+    <ImageView
+        android:id="@+id/pig_strings2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tap"
-        android:text="写真を撮ると鮮度がわかるよ"
-        android:textSize="30sp" />
+        android:layout_height="250dp"
+        android:layout_marginTop="484dp"
+        android:gravity="center"
+        android:src="@drawable/pg_moji2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
