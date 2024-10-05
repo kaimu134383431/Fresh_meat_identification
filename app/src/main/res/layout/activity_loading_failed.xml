@@ -11,7 +11,7 @@
         android:id="@+id/guideline_middle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.50"
+        app:layout_constraintGuide_percent="0.33"
         android:orientation="horizontal" />
 
     <!-- 質問のテキスト -->
@@ -44,37 +44,42 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- 「いいえ」ボタン -->
+
+    <!-- 豚のイラストを下に横並びで配置 -->
+
     <Button
         android:id="@+id/b_yes"
-        android:layout_width="0dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:text="@string/one_more_time_yes"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="60dp"
         android:backgroundTint="#A27AFF"
+        android:text="@string/one_more_time_yes"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline_middle"
         app:layout_constraintWidth_percent="0.5" />
 
-    <!-- 「いいえ」ボタン -->
     <Button
         android:id="@+id/b_no"
-        android:layout_width="0dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:backgroundTint="#A27AFF"
         android:text="@string/one_more_time_no"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/b_yes"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintWidth_percent="0.5" />
 
-    <!-- 豚のイラストを下に横並びで配置 -->
     <ImageView
         android:id="@+id/pig1"
         android:layout_width="156dp"
